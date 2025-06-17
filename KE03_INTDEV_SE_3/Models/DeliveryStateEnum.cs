@@ -8,9 +8,9 @@ namespace KE03_INTDEV_SE_3.Models
 {
     public enum DeliveryStateEnum
     {
-        InBehandeling = 0,
-        Onderweg = 1,
-        Bezorgd = 2,
-        Geannuleerd = 3
+        InBehandeling = 1,
+        Onderweg = 2,
+        Bezorgd = 3,
+        Geannuleerd = 4
     }
 }

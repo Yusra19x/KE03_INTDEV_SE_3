@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KE03_INTDEV_SE_3.MainPage">
 
-    <ScrollView>
+
         <VerticalStackLayout Padding="20" Spacing="15">
             <Label Text="Bezorgstatus bijwerken"
                FontSize="24"
@@ -16,6 +16,6 @@
                 BackgroundColor="LightBlue"
                 HorizontalOptions="Center" />
         </VerticalStackLayout>
-    </ScrollView>
+
 
 </ContentPage>

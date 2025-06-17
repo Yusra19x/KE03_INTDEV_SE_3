@@ -31,6 +31,7 @@ namespace KE03_INTDEV_SE_3
             var request = new DeliveryState
             {
                 OrderId = 1, 
+                DeliveryServiceId = 1,
                 State = selectedStatus
             };
 

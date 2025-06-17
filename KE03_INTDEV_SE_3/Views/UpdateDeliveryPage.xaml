@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KE03_INTDEV_SE_3.Views.UpdateDeliveryPage"
+             Title="Status bijwerken">
+
+    <VerticalStackLayout Padding="20" Spacing="16">
+        <Label Text="Bestelling voor:" FontAttributes="Bold" />
+        <Label x:Name="customerNameLabel" />
+
+        <Label Text="Nieuwe status:" FontAttributes="Bold" />
+        <Picker x:Name="statusPicker"
+                Title="Selecteer status"
+                ItemsSource="{Binding StatusOptions}" />
+
+        <Button Text="Bijwerken" Clicked="OnUpdateClicked" />
+    </VerticalStackLayout>
+</ContentPage>

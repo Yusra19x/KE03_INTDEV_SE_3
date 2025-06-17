@@ -1,4 +1,5 @@
 using KE03_INTDEV_SE_3.Models;
+using Microsoft.Maui.Controls;
 using System.Text.Json;
 
 namespace KE03_INTDEV_SE_3.Views;
@@ -37,6 +38,11 @@ public partial class OverviewOrder : ContentPage
                     PropertyNameCaseInsensitive = true
                 });
 
+                foreach (var order in orders)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Order: {order.Id} heeft {order.DeliveryStates?.Count ?? 0} status(sen).");
+                }
+
                 OrdersView.ItemsSource = orders;
             }
             else
@@ -49,6 +55,23 @@ public partial class OverviewOrder : ContentPage
             System.Diagnostics.Debug.WriteLine($"[LoadOrders ERROR] {ex.Message}");
             await DisplayAlert("Fout", "Kan geen verbinding maken met de server", "OK");
         }
+        
+    }
+
+    private async void OnOrderSelected(object sender, SelectionChangedEventArgs e)
+    {
+        var selectedOrder = e.CurrentSelection.FirstOrDefault() as Order;
+        if (selectedOrder == null)
+            return;
+
+        System.Diagnostics.Debug.WriteLine($"[TAP] Je klikte op order {selectedOrder.Id}");
+
+        await Shell.Current.GoToAsync(nameof(UpdateDeliveryPage), true, new Dictionary<string, object>
+{
+    { "Order", selectedOrder }
+        });
+
+        ((CollectionView)sender).SelectedItem = null;
     }
 }
    

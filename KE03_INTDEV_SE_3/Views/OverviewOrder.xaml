@@ -2,11 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KE03_INTDEV_SE_3.Views.OverviewOrder"
-             Title="OverviewOrder">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Bestellingen">
+
+    <CollectionView x:Name="OrdersView" Margin="10">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame BorderColor="LightGray" CornerRadius="10" Padding="10" Margin="5">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding Customer.Name}" FontAttributes="Bold" FontSize="16" />
+                        <Label Text="{Binding OrderDate, StringFormat='Besteld op: {0:dd-MM-yyyy}'}" />
+                        <Label Text="{Binding LatestStatus}" TextColor="Gray" FontSize="12" />
+                    </VerticalStackLayout>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>

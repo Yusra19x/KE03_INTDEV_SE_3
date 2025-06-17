@@ -16,5 +16,8 @@ namespace KE03_INTDEV_SE_3.Models
 
         public List<Product>? Products { get; set; } 
         public List<DeliveryState>? DeliveryStates { get; set; }
+
+        // Nieuw: handig om direct in je XAML te binden
+        public string? LatestStatus => DeliveryStates?.LastOrDefault()?.State.ToString();
     }
 }

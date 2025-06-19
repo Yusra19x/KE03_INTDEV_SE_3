@@ -11,6 +11,9 @@
         <Label Text="Adres:" FontAttributes="Bold" />
         <Label x:Name="customerAddressLabel" />
 
+        <Label Text="Besteld op:" FontAttributes="Bold" />
+        <Label x:Name="orderDateLabel" />
+
         <Label Text="Nieuwe status:" FontAttributes="Bold" />
         <Picker x:Name="statusPicker"
                 Title="Selecteer status"

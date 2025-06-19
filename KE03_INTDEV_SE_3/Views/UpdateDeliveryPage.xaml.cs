@@ -23,8 +23,11 @@ public partial class UpdateDeliveryPage : ContentPage
         base.OnAppearing();
 
         if (Order?.Customer != null)
+        {
             customerNameLabel.Text = Order.Customer.Name;
             customerAddressLabel.Text = Order.Customer.Address;
+            orderDateLabel.Text = Order.OrderDate.ToString("dd-MM-yyyy");
+        }
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
@@ -37,17 +40,18 @@ public partial class UpdateDeliveryPage : ContentPage
 
         var selectedStatus = Enum.Parse<DeliveryStateEnum>(statusPicker.SelectedItem.ToString());
 
-        var deliveryState = new DeliveryState
+        var deliveryState = new
         {
-            OrderId = Order.Id,
-            DeliveryServiceId = 1,
-            State = selectedStatus,
-            DateTime = DateTime.UtcNow,
-            Order = Order,
-            DeliveryService = new DeliveryService
+            id = 0,
+            state = (int)selectedStatus,
+            datetime = DateTime.UtcNow,
+            orderId = Order.Id,
+            order = "string", // tijdelijk dummy, tenzij verplicht
+            deliveryServiceId = 1,
+            deliveryService = new
             {
-                Id = 1,
-                Name = "DHL"
+                id = 1,
+                name = "DHL"
             }
         };
 

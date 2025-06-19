@@ -24,6 +24,7 @@ public partial class UpdateDeliveryPage : ContentPage
 
         if (Order?.Customer != null)
             customerNameLabel.Text = Order.Customer.Name;
+            customerAddressLabel.Text = Order.Customer.Address;
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)

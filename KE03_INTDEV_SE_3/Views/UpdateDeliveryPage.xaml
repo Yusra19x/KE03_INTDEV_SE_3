@@ -8,6 +8,9 @@
         <Label Text="Bestelling voor:" FontAttributes="Bold" />
         <Label x:Name="customerNameLabel" />
 
+        <Label Text="Adres:" FontAttributes="Bold" />
+        <Label x:Name="customerAddressLabel" />
+
         <Label Text="Nieuwe status:" FontAttributes="Bold" />
         <Picker x:Name="statusPicker"
                 Title="Selecteer status"

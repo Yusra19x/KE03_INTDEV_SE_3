@@ -31,6 +31,81 @@ public partial class UpdateDeliveryPage : ContentPage
         }
     }
 
+    //private async void OnUpdateClicked(object sender, EventArgs e)
+    //{
+    //    if (statusPicker.SelectedItem == null)
+    //    {
+    //        await DisplayAlert("Fout", "Kies een status", "OK");
+    //        return;
+    //    }
+
+    //    var selectedStatus = Enum.Parse<DeliveryStateEnum>(statusPicker.SelectedItem.ToString());
+
+    //    var deliveryState = new
+    //    {
+    //        Id = 0,
+    //        State = (int)selectedStatus,
+    //        DateTime = DateTime.UtcNow,
+    //        OrderId = Order.Id,
+    //        Order = new
+    //        {
+    //            Id = Order.Id,
+    //            OrderDate = Order.OrderDate,
+    //            CustomerId = Order.CustomerId,
+    //            Customer = new
+    //            {
+    //                Id = Order.Customer.Id,
+    //                Name = Order.Customer.Name,
+    //                Address = Order.Customer.Address,
+    //                Active = Order.Customer.Active
+    //            }
+    //        },
+    //        DeliveryServiceId = 1,
+    //        DeliveryService = new
+    //        {
+    //            Id = 1,
+    //            Name = "DHL",
+
+    //        }
+
+    //    };
+
+
+    //    var json = JsonSerializer.Serialize(deliveryState);
+    //    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+    //    try
+    //    {
+
+    //        using var client = new HttpClient();
+    //        client.BaseAddress = new Uri("http://51.137.100.120:5000");
+    //        client.DefaultRequestHeaders.Add("ApiKey", "c9e6f1b1-ee5d-4538-8f61-50bf57a9f42b");
+
+
+    //        await DisplayAlert("Fout", content.ToString(), "OK");
+
+    //        var response = await client.PostAsync("/api/DeliveryStates/UpdateDeliveryState", content);
+
+    //        if (response.IsSuccessStatusCode)
+    //        {
+    //            await DisplayAlert("Gelukt", "Status is bijgewerkt!", "OK");
+    //        }
+
+    //        else
+    //        {
+    //            var errorContent = await response.Content.ReadAsStringAsync();
+    //            await DisplayAlert("Fout", $"Statuscode: {response.StatusCode}\nDetails: {errorContent}", "OK");
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        System.Diagnostics.Debug.WriteLine($"[UpdateDelivery ERROR] {ex.Message}");
+    //        await DisplayAlert("Fout", "Kan geen verbinding maken met de server", "OK");
+    //    }
+
+    //}
+
+
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
         if (statusPicker.SelectedItem == null)
@@ -39,70 +114,18 @@ public partial class UpdateDeliveryPage : ContentPage
             return;
         }
 
-        var selectedStatus = Enum.Parse<DeliveryStateEnum>(statusPicker.SelectedItem.ToString());
+        bool bevestiging = await DisplayAlert(
+            "Bevestigen",
+            $"Weet je zeker dat je de status wilt markeren als '{statusPicker.SelectedItem}'?",
+            "Ja",
+            "Nee"
+        );
 
-        var deliveryState = new
-        {
-            Id = 0,
-            State = (int)selectedStatus,
-            DateTime = DateTime.UtcNow,
-            OrderId = Order.Id,
-            Order = new
-            {
-                Id = Order.Id,
-                OrderDate = Order.OrderDate,
-                CustomerId = Order.CustomerId,
-                Customer = new
-                {
-                    Id = Order.Customer.Id,
-                    Name = Order.Customer.Name,
-                    Address = Order.Customer.Address,
-                    Active = Order.Customer.Active
-                }
-            },
-            DeliveryServiceId = 1,
-            DeliveryService = new
-            {
-                Id = 1,
-                Name = "DHL",
+        if (!bevestiging)
+            return;
 
-            }
-
-        };
-
-
-        var json = JsonSerializer.Serialize(deliveryState);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        try
-        {
-           
-            using var client = new HttpClient();
-            client.BaseAddress = new Uri("http://51.137.100.120:5000");
-            client.DefaultRequestHeaders.Add("ApiKey", "c9e6f1b1-ee5d-4538-8f61-50bf57a9f42b");
-
-
-            await DisplayAlert("Fout", content.ToString(), "OK");
-
-            var response = await client.PostAsync("/api/DeliveryStates/UpdateDeliveryState", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                await DisplayAlert("Gelukt", "Status is bijgewerkt!", "OK");
-            }
-
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                await DisplayAlert("Fout", $"Statuscode: {response.StatusCode}\nDetails: {errorContent}", "OK");
-            }
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"[UpdateDelivery ERROR] {ex.Message}");
-            await DisplayAlert("Fout", "Kan geen verbinding maken met de server", "OK");
-        }
-
+        
+        await DisplayAlert("Voltooid", "De status is bevestigd.", "OK");
     }
 }
 

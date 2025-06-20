@@ -11,11 +11,11 @@
                 SelectionChanged="OnOrderSelected">
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Frame BorderColor="LightGray" CornerRadius="10" Padding="10" Margin="5">
+                <Frame BorderColor="LawnGreen"  CornerRadius="10" Padding="10" Margin="5">
                     <VerticalStackLayout>
                         <Label Text="{Binding Customer.Name}" FontAttributes="Bold" FontSize="16" />
                         <Label Text="{Binding OrderDate, StringFormat='Besteld op: {0:dd-MM-yyyy}'}" />
-                        <Label Text="{Binding LatestStatus}" FontSize="12" TextColor="Gray" />
+                        <Label Text="{Binding LatestStatus}" FontSize="12" TextColor="LawnGreen" />
                     </VerticalStackLayout>
                 </Frame>
             </DataTemplate>

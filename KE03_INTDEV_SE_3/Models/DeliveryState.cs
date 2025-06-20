@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace KE03_INTDEV_SE_3.Models
@@ -16,6 +17,9 @@ namespace KE03_INTDEV_SE_3.Models
 
         public int DeliveryServiceId { get; set; }
         public DeliveryService? DeliveryService { get; set; }
-        public DeliveryStateEnum State { get; set; } 
+        public DeliveryStateEnum State { get; set; }
+        
+        [JsonPropertyName("apiKey")]
+        public string? ApiKey { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using KE03_INTDEV_SE_3.Models;
 using KE03_INTDEV_SE_3.Views;
 using System.Text;
+using Microsoft.Maui.Controls;
 using System.Text.Json;
 
 namespace KE03_INTDEV_SE_3.Views;
@@ -42,31 +43,66 @@ public partial class UpdateDeliveryPage : ContentPage
 
         var deliveryState = new
         {
-            id = 0,
-            state = (int)selectedStatus,
-            datetime = DateTime.UtcNow,
-            orderId = Order.Id,
-            order = "string", // tijdelijk dummy, tenzij verplicht
-            deliveryServiceId = 1,
-            deliveryService = new
+            Id = 0,
+            State = (int)selectedStatus,
+            DateTime = DateTime.UtcNow,
+            OrderId = Order.Id,
+            Order = new
             {
-                id = 1,
-                name = "DHL"
+                Id = Order.Id,
+                OrderDate = Order.OrderDate,
+                CustomerId = Order.CustomerId,
+                Customer = new
+                {
+                    Id = Order.Customer.Id,
+                    Name = Order.Customer.Name,
+                    Address = Order.Customer.Address,
+                    Active = Order.Customer.Active
+                }
+            },
+            DeliveryServiceId = 1,
+            DeliveryService = new
+            {
+                Id = 1,
+                Name = "DHL",
+
             }
+
         };
+
 
         var json = JsonSerializer.Serialize(deliveryState);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri("http://51.137.100.120:5000");
-        client.DefaultRequestHeaders.Add("ApiKey", "c9e6f1b1-ee5d-4538-8f61-50bf57a9f42b");
+        try
+        {
+           
+            using var client = new HttpClient();
+            client.BaseAddress = new Uri("http://51.137.100.120:5000");
+            client.DefaultRequestHeaders.Add("ApiKey", "c9e6f1b1-ee5d-4538-8f61-50bf57a9f42b");
 
-        var response = await client.PostAsync("/api/DeliveryStates/UpdateDeliveryState", content);
 
-        if (response.IsSuccessStatusCode)
-            await DisplayAlert("Gelukt", "Status is bijgewerkt!", "OK");
-        else
-            await DisplayAlert("Fout", $"Statuscode: {response.StatusCode}", "OK");
+            await DisplayAlert("Fout", content.ToString(), "OK");
+
+            var response = await client.PostAsync("/api/DeliveryStates/UpdateDeliveryState", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("Gelukt", "Status is bijgewerkt!", "OK");
+            }
+
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Fout", $"Statuscode: {response.StatusCode}\nDetails: {errorContent}", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[UpdateDelivery ERROR] {ex.Message}");
+            await DisplayAlert("Fout", "Kan geen verbinding maken met de server", "OK");
+        }
+
     }
 }
+

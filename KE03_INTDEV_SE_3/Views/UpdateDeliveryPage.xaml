@@ -19,6 +19,15 @@
                 Title="Selecteer status"
                 ItemsSource="{Binding StatusOptions}" />
 
+        <Button Text="Maak een foto" Clicked="OnTakePhotoClicked" />
+        <Button Text="Kies een foto" Clicked="OnPickPhotoClicked" />
+
+        <Image x:Name="PhotoResultImage"
+           WidthRequest="300"
+           HeightRequest="300"
+           Aspect="AspectFill" 
+           BackgroundColor="LightGray"/>
+
         <Button Text="Bijwerken" Clicked="OnUpdateClicked" />
     </VerticalStackLayout>
 </ContentPage>

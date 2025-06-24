@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KE03_INTDEV_SE_3.Views.UpdateDeliveryPage"
              Title="Status bijwerken">
-
-    <VerticalStackLayout Padding="20" Spacing="16">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
         <Label Text="Bestelling voor:" FontAttributes="Bold" />
         <Label x:Name="customerNameLabel" />
 
@@ -30,4 +30,5 @@
 
         <Button Text="Bijwerken" Clicked="OnUpdateClicked" />
     </VerticalStackLayout>
+</ScrollView>
 </ContentPage>

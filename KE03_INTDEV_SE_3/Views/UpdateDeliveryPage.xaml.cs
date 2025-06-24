@@ -1,4 +1,4 @@
-using KE03_INTDEV_SE_3.Models;
+﻿using KE03_INTDEV_SE_3.Models;
 using System.Text;
 using System.Text.Json;
 using System.Net.Http;
@@ -133,6 +133,7 @@ public partial class UpdateDeliveryPage : ContentPage
     // Deze methode wordt aangeroepen wanneer de gebruiker op de knop klikt om een foto te maken
     private async void OnTakePhotoClicked(object sender, EventArgs e)
     {
+
         try
         {
             var photo = await MediaPicker.CapturePhotoAsync();
@@ -142,6 +143,11 @@ public partial class UpdateDeliveryPage : ContentPage
                 var stream = await photo.OpenReadAsync();
                 PhotoResultImage.Source = ImageSource.FromStream(() => stream);
             }
+
+            // Emoji laten verschijnen
+            emojiLabel.IsVisible = true;
+            await Task.Delay(1500); // emoji blijft 1,5 seconde zichtbaar
+            emojiLabel.IsVisible = false;
         }
         catch (Exception ex)
         {

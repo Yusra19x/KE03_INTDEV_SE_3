@@ -6,7 +6,7 @@ namespace KE03_INTDEV_SE_3
         public AppShell()
         {
             InitializeComponent();
-
+            //Registreer de route, deze wordt aangeroepen vanuit de OverviewOrder.xaml.cs
             Routing.RegisterRoute(nameof(UpdateDeliveryPage), typeof(UpdateDeliveryPage));
         }
     }

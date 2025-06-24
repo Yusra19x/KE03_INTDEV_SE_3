@@ -9,6 +9,7 @@
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
+            //Gebruik de Appshell als rootpagina van de applicatie
             return new Window(new AppShell());
         }
     }

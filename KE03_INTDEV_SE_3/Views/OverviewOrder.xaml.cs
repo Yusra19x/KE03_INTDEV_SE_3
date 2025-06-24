@@ -9,7 +9,7 @@ public partial class OverviewOrder : ContentPage
     public OverviewOrder()
     {
         InitializeComponent();
-
+        
         try
         {
             LoadOrders();
@@ -22,14 +22,18 @@ public partial class OverviewOrder : ContentPage
 
     private async void LoadOrders()
     {
+        //Toon in output dat de orders worden geladen
         try
         {
+            //Maak een nieuwe HttpClient aan en stel de basis-URL en API-sleutel in
             using var client = new HttpClient();
             client.BaseAddress = new Uri("http://51.137.100.120:5000");
             client.DefaultRequestHeaders.Add("ApiKey", "c9e6f1b1-ee5d-4538-8f61-50bf57a9f42b");
 
+            //Het pad naar de API endpoint voor het ophalen van orders
             var response = await client.GetAsync("/api/Order");
 
+            //Als de response succesvol is, deserialiseer de JSON naar een lijst van Orders 
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
@@ -38,6 +42,7 @@ public partial class OverviewOrder : ContentPage
                     PropertyNameCaseInsensitive = true
                 });
 
+                //Toon in output hoeveel orders er zijn en hoeveel status(sen) elke order heeft
                 foreach (var order in orders)
                 {
                     System.Diagnostics.Debug.WriteLine($"Order: {order.Id} heeft {order.DeliveryStates?.Count ?? 0} status(sen).");
@@ -50,6 +55,8 @@ public partial class OverviewOrder : ContentPage
                 await DisplayAlert("Fout", $"Statuscode: {response.StatusCode}", "OK");
             }
         }
+
+        //Toon foutmelding als er geen verbinding kan worden gemaakt met de server
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"[LoadOrders ERROR] {ex.Message}");
@@ -58,6 +65,7 @@ public partial class OverviewOrder : ContentPage
         
     }
 
+    //Toon in output dat er op een order is geklikt
     private async void OnOrderSelected(object sender, SelectionChangedEventArgs e)
     {
         var selectedOrder = e.CurrentSelection.FirstOrDefault() as Order;
@@ -66,6 +74,8 @@ public partial class OverviewOrder : ContentPage
 
         System.Diagnostics.Debug.WriteLine($"[TAP] Je klikte op order {selectedOrder.Id}");
 
+
+        //Roept in appshell aan om naar de UpdateDeliveryPage te navigeren
         await Shell.Current.GoToAsync(nameof(UpdateDeliveryPage), true, new Dictionary<string, object>
 {
     { "Order", selectedOrder }

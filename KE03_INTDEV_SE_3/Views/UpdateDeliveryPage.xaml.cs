@@ -12,11 +12,12 @@ public partial class UpdateDeliveryPage : ContentPage
 {
     public Order Order { get; set; }
 
+    // Deze lijst bevat de mogelijke statusopties voor de leveringsstatus
     public List<string> StatusOptions { get; set; } = Enum.GetNames(typeof(DeliveryStateEnum)).ToList();
 
     public UpdateDeliveryPage()
     {
-        InitializeComponent();
+        InitializeComponent();         
         BindingContext = this;
     }
 
@@ -24,6 +25,7 @@ public partial class UpdateDeliveryPage : ContentPage
     {
         base.OnAppearing();
 
+        //Als er een order en customer aanwezig is, vul dan de labels met de gegevens van de order en klant
         if (Order?.Customer != null)
         {
             customerNameLabel.Text = Order.Customer.Name;
@@ -106,6 +108,7 @@ public partial class UpdateDeliveryPage : ContentPage
 
     //}
 
+    // Deze methode wordt aangeroepen wanneer de gebruiker op de knop klikt om de status bij te werken
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
         if (statusPicker.SelectedItem == null)
@@ -127,6 +130,7 @@ public partial class UpdateDeliveryPage : ContentPage
         await DisplayAlert("Voltooid", "De status is bevestigd.", "OK");
     }
 
+    // Deze methode wordt aangeroepen wanneer de gebruiker op de knop klikt om een foto te maken
     private async void OnTakePhotoClicked(object sender, EventArgs e)
     {
         try
@@ -145,6 +149,7 @@ public partial class UpdateDeliveryPage : ContentPage
         }
     }
 
+    // Deze methode wordt aangeroepen wanneer de gebruiker op de knop klikt om een foto te kiezen
     private async void OnPickPhotoClicked(object sender, EventArgs e)
     {
         try

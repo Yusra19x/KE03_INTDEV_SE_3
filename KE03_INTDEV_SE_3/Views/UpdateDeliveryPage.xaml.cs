@@ -4,6 +4,8 @@ using System.Text.Json;
 using System.Net.Http;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Media;
+using Microsoft.Maui.ApplicationModel; // Voor Permission (locatie ophalen)
+using Microsoft.Maui.Devices.Sensors;  // Voor Geolocation
 
 namespace KE03_INTDEV_SE_3.Views;
 
@@ -115,6 +117,46 @@ public partial class UpdateDeliveryPage : ContentPage
         {
             await DisplayAlert("Fout", "Kies een status", "OK");
             return;
+        }
+
+        // Vraag locatiepermissie
+        var permissionLocation = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+
+        if (permissionLocation != PermissionStatus.Granted)
+        {
+            await DisplayAlert("Locatie vereist", "Je moet locatie toestaan om de status te wijzigen.", "OK");
+            return;
+        }
+
+        // Haal locatie op
+        var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+        var location = await Geolocation.GetLocationAsync(request);
+
+        if (location == null)
+        {
+            await DisplayAlert("Locatiefout", "Locatie kon niet worden opgehaald. Probeer opnieuw.", "OK");
+            return;
+        }
+
+        double latitude = location.Latitude;
+        double longitude = location.Longitude;
+
+        // Zoek adres o.b.v. de latitude en longitude
+        string adres = "Adres onbekend";
+
+        try
+        {
+            var placemarks = await Geocoding.GetPlacemarksAsync(latitude, longitude);
+            var placemark = placemarks?.FirstOrDefault();
+
+            if (placemark != null)
+            {
+                adres = $"{placemark.Thoroughfare} {placemark.SubThoroughfare}, {placemark.PostalCode} {placemark.Locality}";
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Geocoding ERROR] {ex.Message}");
         }
 
         bool bevestiging = await DisplayAlert(

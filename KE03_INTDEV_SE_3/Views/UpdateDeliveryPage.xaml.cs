@@ -5,7 +5,7 @@ using System.Net.Http;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Media;
 using Microsoft.Maui.ApplicationModel; // Voor Permission (locatie ophalen)
-using Microsoft.Maui.Devices.Sensors;  // Voor Geolocation
+using Microsoft.Maui.Devices.Sensors;  // Voor Geolocation zelf
 
 namespace KE03_INTDEV_SE_3.Views;
 
@@ -119,6 +119,8 @@ public partial class UpdateDeliveryPage : ContentPage
             return;
         }
 
+        // Onderstaand stuk betreffende de locatie heeft eerst gewerkt. Wel gaf hij steeds "Adres onbekend" aan, dit heb ik proberen te wijzigen.
+        // Nadat de applicatie het niet meer deed door de API heb ik deze dus niet meer kunnen aanpassen, want ik kan hem niet meer testen.
         // Vraag locatiepermissie
         var permissionLocation = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
 
@@ -128,7 +130,7 @@ public partial class UpdateDeliveryPage : ContentPage
             return;
         }
 
-        // Haal locatie op
+        // Haal locatie (lengte- en breedtegraden) op
         var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
         var location = await Geolocation.GetLocationAsync(request);
 
@@ -142,7 +144,7 @@ public partial class UpdateDeliveryPage : ContentPage
         double longitude = location.Longitude;
 
         // Zoek adres o.b.v. de latitude en longitude
-        string adres = "Adres onbekend";
+        string addres = "Adres onbekend";
 
         try
         {
@@ -151,7 +153,7 @@ public partial class UpdateDeliveryPage : ContentPage
 
             if (placemark != null)
             {
-                adres = $"{placemark.Thoroughfare} {placemark.SubThoroughfare}, {placemark.PostalCode} {placemark.Locality}";
+                addres = $"{placemark.Thoroughfare} {placemark.SubThoroughfare}, {placemark.PostalCode} {placemark.Locality}";
             }
         }
         catch (Exception ex)
@@ -159,14 +161,14 @@ public partial class UpdateDeliveryPage : ContentPage
             System.Diagnostics.Debug.WriteLine($"[Geocoding ERROR] {ex.Message}");
         }
 
-        bool bevestiging = await DisplayAlert(
+        bool confirmation = await DisplayAlert(
             "Bevestigen",
             $"Weet je zeker dat je de status wilt markeren als '{statusPicker.SelectedItem}'?",
             "Ja",
             "Nee"
         );
 
-        if (!bevestiging)
+        if (!confirmation)
             return;
 
         await DisplayAlert("Voltooid", "De status is bevestigd.", "OK");

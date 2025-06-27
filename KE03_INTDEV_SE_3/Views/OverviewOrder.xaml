@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:KE03_INTDEV_SE_3.Models"
              x:Class="KE03_INTDEV_SE_3.Views.OverviewOrder"
              Title="Bestellingen">
 
-    <CollectionView x:Name="OrdersView"
-                Margin="10"
-                SelectionMode="Single"
-                SelectionChanged="OnOrderSelected">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame BorderColor="LawnGreen"  CornerRadius="10" Padding="10" Margin="5">
-                    <VerticalStackLayout>
-                        <Label Text="{Binding Customer.Name}" FontAttributes="Bold" FontSize="16" />
-                        <Label Text="{Binding OrderDate, StringFormat='Besteld op: {0:dd-MM-yyyy}'}" />
-                        <Label Text="{Binding LatestStatus}" FontSize="12" TextColor="LawnGreen" />
-                    </VerticalStackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <VerticalStackLayout Padding="10" Spacing="10">
+        
+        <!-- filter voor filtering op naam-->
+        <Entry x:Name="NameFilterEntry"
+               Placeholder="Filter op klantnaam"
+               TextChanged="OnNameFilterChanged" />
+
+        <!-- filter voor filtering op datum -->
+        <DatePicker x:Name="DateFilter"
+                    Format="Kies datum"
+                    DateSelected="OnDateFilterChanged" />
+
+        <!-- lijst van de bestellingen -->
+        <CollectionView x:Name="OrdersView"
+                        Margin="10"
+                        SelectionMode="Single"
+                        SelectionChanged="OnOrderSelected">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="LawnGreen" CornerRadius="10" Padding="10" Margin="5">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Customer.Name}" FontAttributes="Bold" FontSize="16" />
+                            <Label Text="{Binding OrderDate, StringFormat='Besteld op: {0:dd-MM-yyyy}'}" />
+                            <Label Text="{Binding LatestStatus}" FontSize="12" TextColor="LawnGreen" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout> 
 </ContentPage>
+
+

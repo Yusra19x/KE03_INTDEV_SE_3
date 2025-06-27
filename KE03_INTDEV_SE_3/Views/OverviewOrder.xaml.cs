@@ -6,7 +6,9 @@ namespace KE03_INTDEV_SE_3.Views;
 
 public partial class OverviewOrder : ContentPage
 {
+
     public OverviewOrder()
+
     {
         InitializeComponent();
         
@@ -83,5 +85,36 @@ public partial class OverviewOrder : ContentPage
 
         ((CollectionView)sender).SelectedItem = null;
     }
+    //private void ApplyFilters()
+    //{
+    //    var name = NameFilterEntry?.Text?.Trim();
+    //    var selectedDate = DateFilter.Date;
+
+    //    bool nameFilterActive = !string.IsNullOrWhiteSpace(name);
+    //    bool dateFilterActive = userHeeftDatumGekozen;
+
+    //    if (!nameFilterActive && !dateFilterActive)
+    //    {
+    //        OrdersView.ItemsSource = allOrders;
+    //        return;
+    //    }
+
+    //    var filtered = allOrders.AsEnumerable();
+
+    //    if (nameFilterActive && name != null)
+    //    {
+    //        filtered = filtered.Where(o =>
+    //            o.Customer != null &&
+    //            !string.IsNullOrWhiteSpace(o.Customer.Name) &&
+    //            o.Customer.Name.ToLower().Contains(name.ToLower()));
+    //    }
+
+    //    if (dateFilterActive)
+    //    {
+    //        filtered = filtered.Where(o => o.OrderDate.Date == selectedDate.Date);
+    //    }
+
+    //    OrdersView.ItemsSource = filtered.ToList();
+    //}
+
 }
-   
